@@ -1,0 +1,61 @@
+<?php
+
+/** @var array[] $processes */
+/** @var array $formData */
+/** @var string|null $mysqlServerName */
+
+$title = 'MySQL Process List';
+if ($mysqlServerName != '') {
+    $title .= " on {$mysqlServerName}";
+}
+$this->layout('layouts/default', [
+    'title' => $title,
+]);
+
+?>
+
+<h1><?= $this->e($title) ?></h1>
+
+<form action="" method="get" class="process-list-filter">
+    <fieldset>
+        <legend>Filter</legend>
+        <label for="form_filter_user">User:</label> <input type="text" id="form_filter_user" name="user" value="<?= $this->e($formData['user']) ?>" />
+        <label for="form_filter_host">Host:</label> <input type="text" id="form_filter_host" name="host" value="<?= $this->e($formData['host']) ?>" />
+        <label for="form_filter_db">DB:</label> <input type="text" id="form_filter_db" name="db" value="<?= $this->e($formData['db']) ?>" />
+        <input type="checkbox" name="show_inactive" value="1" id="form_filter_show_inactive"<?php if ($formData['show_inactive']) { echo " checked"; } ?> /> <label for="form_filter_show_inactive">Show inactive processes</label>
+        <input type="submit" name="" value="Update" />
+    </fieldset>
+</form>
+
+<table class="process-list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>User</th>
+            <th>Host</th>
+            <th>Database</th>
+            <th>Command</th>
+            <th>Time</th>
+            <th>State</th>
+            <th>Info</th>
+            <th>Progress</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach ($processes as $process) { ?>
+        <tr>
+            <td class="number"><a href="<?= $this->e($this->urlFromRoute('process-item', ['id' => $process['Id']], $_GET)) ?>"><?= $this->e($process['Id']) ?></a></td>
+            <td><?= $this->e($process['User']) ?></td>
+            <td><?= $this->e($process['Host']) ?></td>
+            <td<?php if ($process['db'] === null) { ?> class="not-available"<?php } ?>><?= ($process['db'] !== null) ? $this->e($process['db']) : 'None' ?></td>
+            <td><?= $this->e($process['Command']) ?></td>
+            <td class="duration"><?= $this->e($process['Time'] !== null ? $this->formatDuration($process['Time']) : '') ?></td>
+            <td><?= $this->e($process['State']) ?></td>
+            <td><?= $this->e($process['Info']) ?></td>
+            <td class="number<?php if ($process['Progress'] == 0) { echo ' not-available'; } ?>"><?= $this->e($process['Progress']) ?>%</td>
+        </tr>
+<?php } ?>
+    </tbody>
+</table>
+
+

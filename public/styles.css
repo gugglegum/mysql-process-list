@@ -1,0 +1,61 @@
+table.process-list {
+    border-collapse: collapse;
+    background-color: #f8f8f8;
+    clear: left;
+}
+table.process-list, table.process-list th, table.process-list td {
+    border: 1px solid #ccc;
+}
+table.process-list th, table.process-list td {
+    padding: 5px 10px;
+}
+
+table.process-details {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f8f8f8;
+}
+table.process-details, table.process-details th, table.process-details td {
+    border: 1px solid #ccc;
+}
+table.process-details th, table.process-details td {
+    padding: 5px 10px;
+}
+table.process-details th {
+    text-align: right;
+}
+
+.not-available {
+    color: #999;
+}
+
+table td.number {
+    text-align: right;
+}
+table td.duration {
+    text-align: right;
+    white-space: nowrap;
+}
+
+form.process-list-filter {
+    margin: 1em 0;
+}
+form.process-list-filter fieldset {
+    float: left;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 1em;
+}
+form.process-list-filter input[type=submit] {
+    margin-left: 1em;
+}
+form.process-list-filter input[type=text] {
+    width: 6em;
+    margin-right: 1em;
+}
+
+form.kill-process {
+    margin: 1em 0;
+}

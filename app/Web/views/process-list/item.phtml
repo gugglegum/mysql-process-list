@@ -1,0 +1,54 @@
+<?php
+
+/** @var int $processId */
+/** @var array $process */
+/** @var string|null $mysqlServerName */
+
+$title = "Process #{$processId}";
+if ($mysqlServerName != '') {
+    $title .= " on {$mysqlServerName}";
+}
+$this->layout('layouts/default', [
+    'title' => $title,
+]);
+
+?>
+
+<div style="float: left; margin-right: 1em; margin-top: 0.6em;"><a href="<?= $this->e($this->urlFromRoute('process-list', [], $_GET)) ?>">&larr; Back to list</a></div>
+<h1><?= $this->e($title) ?></h1>
+<?php if ($process !== false) { ?>
+<table class="process-details">
+    <tbody>
+        <tr>
+            <th>User</th>
+            <td><?= $this->e($process['User']) ?></td>
+            <th>Host</th>
+            <td colspan="3"><?= $this->e($process['Host']) ?></td>
+            <th>Database</th>
+            <td<?php if ($process['db'] === null) { ?> class="not-available"<?php } ?>><?= ($process['db'] !== null) ? $this->e($process['db']) : 'None' ?></td>
+        </tr>
+        <tr>
+            <th>Command</th>
+            <td><?= $this->e($process['Command']) ?></td>
+            <th>Time</th>
+            <td><?= $this->e($this->formatDuration($process['Time'])) ?></td>
+            <th>Progress</th>
+            <td<?php if ($process['Progress'] == 0) { ?> class="not-available" <?php } ?>><?= $this->e($process['Progress']) ?>%</td>
+            <th>State</th>
+            <td><?= $this->e($process['State']) ?></td>
+        </tr>
+        <tr>
+            <th>Info</th>
+            <td colspan="7"><pre><?= $this->e($process['Info']) ?></pre></td>
+        </tr>
+    </tbody>
+</table>
+
+<form action="<?= $this->e($this->urlFromRoute('process-kill', ['id' => $processId], $_GET)) ?>" method="post" class="kill-process">
+    <input type="submit" name="" value="KILL PROCESS" onclick="return confirm('Do you really want to kill this process?')" />
+</form>
+
+<?php } else { ?>
+<p>Sorry, this process is no longer exists... <a href="<?= $this->e($this->urlFromRoute('process-list', [], $_GET)) ?>">Back to list</a></p>
+<?php } ?>
+

@@ -1,0 +1,13 @@
+<?php
+
+/** @var string $details */
+
+$title = '500 Internal Server Error';
+$this->layout('layouts/main-page', [
+    'title' => $title,
+])
+?>
+
+<h1><?= $this->e($title) ?></h1>
+
+<p>An error occurred on the server during the execution of your request<?= !empty($details) ? ': ' . $this->e($details) : '' ?>.</p>
