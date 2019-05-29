@@ -52,7 +52,7 @@ $this->layout('layouts/default', [
             <td class="duration"><?= $this->e($process['Time'] !== null ? $this->formatDuration($process['Time']) : '') ?></td>
             <td><?= $this->e($process['State']) ?></td>
             <td><?= $this->e($process['Info']) ?></td>
-            <td class="number<?php if ($process['Progress'] == 0) { echo ' not-available'; } ?>"><?= $this->e($process['Progress']) ?>%</td>
+            <td class="number<?php if ($process['Progress'] == 0) { echo ' not-available'; } ?>"><?= $this->e(round($process['Progress'], 2)) ?>%</td>
         </tr>
 <?php } ?>
     </tbody>
